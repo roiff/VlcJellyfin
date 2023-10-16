@@ -209,6 +209,7 @@ public class JfClient {
         SendPost(playbackurl, deviceProfile, new JJCallBack() {
             @Override
             public void onSuccess(String str) {
+                final String playbackInfo = str;
                 try {
                     // 使用Gson解析JSON数据
                     Gson gson = new Gson();
@@ -231,7 +232,7 @@ public class JfClient {
         if (playpath != null && !playpath.isEmpty()) {
             playurl = config.getJellyfinUrl() + playpath;
         } else {
-            playurl = config.getJellyfinUrl() + "/videos/" + itemid + "/stream.mp4?static=true&DeviceId=" + DeviceId + "&api_key=" + AccessToken;
+            playurl = config.getJellyfinUrl() + "/videos/" + itemid + "/stream.mp4?static=true&DeviceId=" + DeviceId + "&api_key=" + AccessToken + "&debug" + playbackInfo;
         }
 
         return playurl; // Return the playurl variable
