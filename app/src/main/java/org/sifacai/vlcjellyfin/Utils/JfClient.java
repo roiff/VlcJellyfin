@@ -226,7 +226,7 @@ public class JfClient {
 
         String playurl = ""; 
         if (playpath.isEmpty() || playpath==null) {
-            String encodedplaybackInfo = URLEncoder.encode(playbackInfo, "UTF-8");
+            String encodedplaybackInfo = URLEncoder.encode(playbackInfo);
             playurl = config.getJellyfinUrl() + "/videos/" + itemid + "/stream.mp4?static=true&DeviceId=" + DeviceId + "&api_key=" + AccessToken + "&debug=" + encodedplaybackInfo;
         } else {
             playurl = config.getJellyfinUrl() + playpath;
