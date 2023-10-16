@@ -210,7 +210,8 @@ public class JfClient {
         String playpath = "";
         String playbackInfo = "HTTP Req failed";
         try {
-            playbackInfo = OkGo.post(playbackurl).headers(headers).upJson(deviceProfile).execute().body().string();
+            Response playbackInfoDetail = OkGo.post(playbackurl).headers(headers).upJson(deviceProfile).execute();
+            playbackInfo = playbackInfoDetail.body().string();
         } catch (Exception e) {
             playbackInfo = "Req";
         }
