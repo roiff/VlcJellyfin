@@ -215,7 +215,7 @@ public class JfClient {
             playbackInfo = "Req";
         }
         try {
-            playbackInfo = OkGo.post(playbackurl).headers(headers).upJson(deviceProfile).body().string();
+            playbackInfo = OkGo.post(playbackurl).headers(headers).upJson(deviceProfile).body().execute().body().string();
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(playbackInfo, JsonObject.class);
             JsonArray mediaSources = jsonObject.getAsJsonArray("MediaSources");
