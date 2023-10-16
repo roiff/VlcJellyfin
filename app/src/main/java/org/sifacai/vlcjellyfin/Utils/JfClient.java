@@ -211,6 +211,11 @@ public class JfClient {
         String playbackInfo = "HTTP Req failed";
         try {
             playbackInfo = SendPost(playbackurl, deviceProfile);
+        } catch (Exception e) {
+            playbackInfo = "Req failed";
+        }
+        try {
+            playbackInfo = SendPost(playbackurl, deviceProfile);
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(playbackInfo, JsonObject.class);
             JsonArray mediaSources = jsonObject.getAsJsonArray("MediaSources");
