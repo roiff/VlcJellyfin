@@ -212,7 +212,7 @@ public class JfClient {
         try {
             playbackInfo = OkGo.<String>post(playbackurl).headers(headers).upJson(deviceProfile).execute().body().string();
         } catch (Exception e) {
-            playbackInfo = e.getMessage();
+            showLoadingDialog(e.getMessage());
         }
         try {
             playbackInfo = SendPost(playbackurl, deviceProfile);
