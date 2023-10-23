@@ -239,6 +239,10 @@ public class JfClient {
                             return;
                         }
                     } else {
+                        System.out.println("playbackObj:" + "没有MediaSources");
+                        System.out.println("playbackurl:" + backupPlayUrl);
+                        System.out.println("playbackObj:" + playbackObj);
+                        cb.onSuccess(backupPlayUrl);
                         err.onError("获取播放地址失败：" + str);
                     }
                 } catch (Exception e) {

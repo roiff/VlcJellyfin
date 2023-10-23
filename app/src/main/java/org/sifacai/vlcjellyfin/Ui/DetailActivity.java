@@ -374,7 +374,13 @@ public class DetailActivity extends BaseActivity implements JAdapter.OnItemClick
             public void onSuccess(String url) {
                 media.Url = url;
             }
-        }, null);
+        }, new JfClient.JJCallBack() {
+            @Override
+            public void onError(String str) {
+                errcb.onError(str);
+                finish();
+            }
+        });
         if (item.getUserData() != null) {
             UserData userdata = item.getUserData();
             media.startPositionTicks = userdata.getPlaybackPositionTicks();
