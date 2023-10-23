@@ -369,7 +369,12 @@ public class DetailActivity extends BaseActivity implements JAdapter.OnItemClick
         media.Id = item.getId();
         media.Name = item.getName();
         media.cover = "";
-        media.Url = JfClient.GetPlayUrl(media.Id);
+        JfClient.GetPlayUrl(media.Id, new JfClient.JJCallBack() {
+            @Override
+            public void onSuccess(String url) {
+                media.Url = url;
+            }
+        }, null);
         if (item.getUserData() != null) {
             UserData userdata = item.getUserData();
             media.startPositionTicks = userdata.getPlaybackPositionTicks();
