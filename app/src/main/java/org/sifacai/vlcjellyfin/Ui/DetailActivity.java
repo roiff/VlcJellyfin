@@ -372,12 +372,14 @@ public class DetailActivity extends BaseActivity implements JAdapter.OnItemClick
         JfClient.GetPlayUrl(media.Id, new JfClient.JJCallBack() {
             @Override
             public void onSuccess(String url) {
+                System.out.println("播放地址：" + url);
                 media.Url = url;
             }
         }, new JfClient.JJCallBack() {
             @Override
             public void onError(String str) {
                 errcb.onError(str);
+                System.out.println("播放地址：" + str);
                 finish();
             }
         });
