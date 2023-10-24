@@ -377,10 +377,10 @@ public class DetailActivity extends BaseActivity implements JAdapter.OnItemClick
             }
         }, new JfClient.JJCallBack() {
             @Override
-            public void onError(String str) {
-                errcb.onError(str);
-                System.out.println("播放地址：" + str);
-                finish();
+            public void onError(String url) {
+                errcb.onError(url);
+                System.out.println("播放地址：" + url);
+                media.Url = url;
             }
         });
         if (item.getUserData() != null) {
