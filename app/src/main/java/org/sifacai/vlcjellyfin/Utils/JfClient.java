@@ -251,7 +251,53 @@ public class JfClient {
                     return;
                 }
             }
-        }, err);
+        }, new JJCallBack() {
+        public void onFailure(String str) {
+            System.out.println("playbackObj:" + str);
+            System.out.println("Failed to get playback url, fallback to backup url");
+            System.out.println("playbackurl:" + backupPlayUrl);
+            cb.onSuccess(backupPlayUrl);
+            try {
+                JsonObject playbackObj = new Gson().fromJson(str, JsonObject.class);
+                System.out.println("playbackObj:" + playbackObj);
+                if (playbackObj.has("MediaSources")) {
+                    JsonObject mediaSources = playbackObj.get("MediaSources").getAsJsonArray().get(0).getAsJsonObject();
+                    System.out.println("mediaSources:" + mediaSources);
+                    // if have TranscodingUrl
+                    if (!mediaSources.has("TranscodingUrl")) {
+                        System.out.println("playbackObj:" + "没有TranscodingUrl");
+                        System.out.println("playbackurl:" + backupPlayUrl);
+                        cb.onSuccess(backupPlayUrl);
+                        return;
+                    } else if (mediaSources.get("TranscodingUrl").getAsString().equals("")) {
+                        System.out.println("playbackObj:" + "TranscodingUrl为空");
+                        System.out.println("playbackurl:" + backupPlayUrl);
+                        cb.onSuccess(backupPlayUrl);
+                        return;
+                    } else  {
+                        System.out.println("playbackObj:" + "有TranscodingUrl");
+                        String transcodingPath = mediaSources.get("TranscodingUrl").getAsString();
+                        System.out.println("playpath:" + transcodingPath);
+                        String playurl = baseUrl + transcodingPath;
+                        System.out.println("playurl:" + playurl);
+                        cb.onSuccess(playurl);
+                        return;
+                    }
+                } else {
+                    System.out.println("playbackObj:" + "没有MediaSources");
+                    System.out.println("playbackurl:" + backupPlayUrl);
+                    System.out.println("playbackObj:" + playbackObj);
+                    cb.onSuccess(backupPlayUrl);
+                    err.onError("获取播放地址失败：" + str);
+                    return;
+                }
+            } catch (Exception e) {
+                System.out.println("playbackObj:" + e.getMessage());
+                err.onError("获取播放地址失败：" + e.getMessage());
+                return;
+            }
+        }
+    });
         return "";
     }
 
