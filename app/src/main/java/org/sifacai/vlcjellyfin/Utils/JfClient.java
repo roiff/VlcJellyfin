@@ -215,7 +215,6 @@ public class JfClient {
                     JsonObject playbackObj = new Gson().fromJson(str, JsonObject.class);
                     System.out.println("playbackObj:" + playbackObj);
                     if (playbackObj.has("MediaSources")) {
-                        // get length
                         JsonObject mediaSources = playbackObj.get("MediaSources").getAsJsonArray().get(0).getAsJsonObject();
                         System.out.println("mediaSources:" + mediaSources);
                         // if have TranscodingUrl
@@ -225,7 +224,7 @@ public class JfClient {
                             cb.onSuccess(backupPlayUrl);
                             return;
                         } else if (mediaSources.get("TranscodingUrl").getAsString().equals("")) {
-                            System.out.println("playbackObj:" + "没有TranscodingUrl");
+                            System.out.println("playbackObj:" + "TranscodingUrl为空");
                             System.out.println("playbackurl:" + backupPlayUrl);
                             cb.onSuccess(backupPlayUrl);
                             return;
@@ -244,10 +243,12 @@ public class JfClient {
                         System.out.println("playbackObj:" + playbackObj);
                         cb.onSuccess(backupPlayUrl);
                         err.onError("获取播放地址失败：" + str);
+                        return;
                     }
                 } catch (Exception e) {
                     System.out.println("playbackObj:" + e.getMessage());
                     err.onError("获取播放地址失败：" + e.getMessage());
+                    return;
                 }
             }
         }, err);
